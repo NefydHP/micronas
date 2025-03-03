@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Orange Pi NAS Monitor</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f4f4f9;
+				color: #333;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh; /* Full viewport height */
+			}
+			.container {
+				max-width: 800px;
+				margin: 50px auto;
+				padding: 20px;
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				position: relative; /* Required for absolute positioning of the logout button */
+			}
+			h1 {
+				text-align: center;
+			}
+			.storage-item {
+				margin-bottom: 20px;
+				padding: 15px;
+				background: #f9f9f9;
+				border-radius: 8px;
+				border: 1px solid #ddd;
+			}
+			.storage-item h2 {
+				margin-top: 0;
+			}
+			.progress-bar {
+				width: 100%;
+				height: 20px;
+				background: #e0e0e0;
+				border-radius: 10px;
+				overflow: hidden;
+			}
+			.progress {
+				height: 100%;
+				background: #76c7c0;
+			}
+			#login-form {
+				max-width: 400px;
+				padding: 20px;
+				padding-right: 45px;
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			#login-form input {
+				width: 100%;
+				padding: 10px;
+				margin: 10px 0;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+			}
+			#login-form button {
+				width: 423px;
+				padding: 10px;
+				background: #ff902e;
+				border: none;
+				border-radius: 4px;
+				color: #fff;
+				cursor: pointer;
+			}
+			#login-form button:hover {
+				background: #5aa6a0;
+			}
+			#logout-button {
+				position: fixed; /* Position the button absolutely */
+				top: 10px; /* Distance from the top */
+				right: 10px; /* Distance from the right */
+				padding: 8px 16px;
+				background: #ff4d4d; /* Red color for logout */
+				border: none;
+				border-radius: 4px;
+				color: #fff;
+				cursor: pointer;
+				font-size: 14px;
+			}
+			#logout-button:hover {
+				background: #e60000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="login-form">
+			<h2>Login</h2>
+			<input type="text" id="username" placeholder="Username" />
+			<input type="password" id="password" placeholder="Password" />
+			<button onclick="login()">Login</button>
+		</div>
+
+		<div class="container" style="display: none" id="main-content">
+			<button id="logout-button" onclick="logout()">Logout</button>
+
+			<h1>Orange Pi NAS Storage Monitor</h1>
+			<div id="storage-list"></div>
+		</div>
+
+		<script>
+			// Function to fetch storage data
+			async function fetchStorageData() {
+				const token = localStorage.getItem("token");
+				if (!token) {
+					return; // Do nothing if there's no token
+				}
+
+				const response = await fetch("/api/storage", {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					const storageList = document.getElementById("storage-list");
+					storageList.innerHTML = "";
+
+					for (const [name, info] of Object.entries(data)) {
+						const storageItem = document.createElement("div");
+						storageItem.className = "storage-item";
+
+						const progress = (info.used / info.total) * 100;
+
+						storageItem.innerHTML = `
+                        <h2>${name}</h2>
+                        <p>Total: ${info.total} GB</p>
+                        <p>Used: ${info.used} GB</p>
+                        <p>Free: ${info.free} GB</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${progress}%"></div>
+                        </div>
+                    `;
+						storageList.appendChild(storageItem);
+					}
+				} else {
+					localStorage.clear(); // Clear localStorage on error
+					alert("Failed to fetch storage data. Please log in again.");
+					window.location.reload(); // Reload the page
+				}
+			}
+
+			// Function to handle login
+			async function login() {
+				const username = document.getElementById("username").value;
+				const password = document.getElementById("password").value;
+
+				const response = await fetch("/api/login", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ username, password }),
+				});
+
+				const data = await response.json();
+				if (data.token) {
+					localStorage.setItem("token", data.token);
+					document.getElementById("login-form").style.display = "none";
+					document.getElementById("main-content").style.display = "block";
+					fetchStorageData(); // Fetch data after login
+					startPolling(); // Start polling after login
+				} else {
+					alert("Login failed. Please check your credentials.");
+				}
+			}
+
+			// Function to start polling for storage data
+			function startPolling() {
+				setInterval(fetchStorageData, 5000); // Fetch data every 5 seconds
+			}
+
+			// Function to handle logout
+			function logout() {
+				localStorage.clear(); // Clear all data in localStorage
+				window.location.reload(); // Reload the page to show the login form
+			}
+
+			// Check if the user is already logged in
+			window.onload = () => {
+				const token = localStorage.getItem("token");
+				if (token) {
+					document.getElementById("login-form").style.display = "none";
+					document.getElementById("main-content").style.display = "block";
+					fetchStorageData(); // Fetch data if already logged in
+					startPolling(); // Start polling if already logged in
+				}
+			};
+		</script>
+	</body>
+</html>
