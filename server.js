@@ -16,10 +16,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Mock data for storage monitoring
 const mockStorageData = {
-    FlashDrive: { total: 64, used: 32, free: 32 }, // in GB
-    MemoryCard: { total: 128, used: 64, free: 64 },
-    BackupDrive: { total: 1024, used: 512, free: 512 },
+    FlashDrive : { total: 64, used: 52}, // in GB
+    MemoryCard: { total: 64, used: 47},
+    BackupDrive: { total: 2, used: 0.7},
 };
+
+Object.values(mockStorageData).forEach(device => {
+    device.free = device.total - device.used;
+});
 
 // Secret key for JWT (should be stored securely in production)
 const JWT_SECRET = 'secret-key';

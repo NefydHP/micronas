@@ -5,8 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Orange Pi NAS Monitor</title>
 		<style>
+			* {
+				font-family: monospace;
+			}
 			body {
-				font-family: sans-serif;
 				margin: 0;
 				padding: 0;
 				background-color: #f4f4f9;
@@ -14,19 +16,21 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				height: 100vh; /* Full viewport height */
+				min-height: 100vh; /* Use min-height instead of height for better responsiveness */
 			}
 			.container {
 				max-width: 800px;
-				margin: 50px auto;
+				width: 90%; /* Make the container width responsive */
+				margin: 20px auto; /* Reduce margin for smaller screens */
 				padding: 20px;
 				background: #fff;
 				border-radius: 8px;
 				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-				position: relative; /* Required for absolute positioning of the logout button */
+				position: relative;
 			}
 			h1 {
 				text-align: center;
+				font-size: 24px; /* Adjust font size for smaller screens */
 			}
 			.storage-item {
 				margin-bottom: 20px;
@@ -37,6 +41,7 @@
 			}
 			.storage-item h2 {
 				margin-top: 0;
+				font-size: 18px; /* Adjust font size for smaller screens */
 			}
 			.progress-bar {
 				width: 100%;
@@ -51,37 +56,40 @@
 			}
 			#login-form {
 				max-width: 400px;
+				width: 90%; /* Make the form width responsive */
 				padding: 20px;
-				padding-right: 45px;
 				background: #fff;
 				border-radius: 8px;
 				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				margin: 20px auto; /* Center the form and add margin */
 			}
 			#login-form input {
-				width: 100%;
+				width: calc(100% - 20px); /* Adjust width to account for padding */
 				padding: 10px;
 				margin: 10px 0;
 				border: 1px solid #ddd;
 				border-radius: 4px;
+				font-size: 16px; /* Adjust font size for better readability on mobile */
 			}
 			#login-form button {
-				width: 423px;
+				width: 100%; /* Make the button full width */
 				padding: 10px;
 				background: #ff902e;
 				border: none;
 				border-radius: 4px;
 				color: #fff;
 				cursor: pointer;
+				font-size: 16px; /* Adjust font size for better readability on mobile */
 			}
 			#login-form button:hover {
 				background: #5aa6a0;
 			}
 			#logout-button {
-				position: fixed; /* Position the button absolutely */
-				top: 10px; /* Distance from the top */
-				right: 10px; /* Distance from the right */
+				position: fixed;
+				top: 10px;
+				right: 10px;
 				padding: 8px 16px;
-				background: #ff4d4d; /* Red color for logout */
+				background: #ff4d4d;
 				border: none;
 				border-radius: 4px;
 				color: #fff;
@@ -90,6 +98,35 @@
 			}
 			#logout-button:hover {
 				background: #e60000;
+			}
+
+			/* Media Queries for Mobile Devices */
+			@media (max-width: 600px) {
+				h1 {
+					font-size: 20px; /* Smaller font size for mobile */
+				}
+				.storage-item h2 {
+					font-size: 16px; /* Smaller font size for mobile */
+				}
+				#login-form {
+					padding: 15px; /* Reduce padding for smaller screens */
+				}
+				#login-form input {
+					width: calc(100% - 20px); /* Adjust width for mobile */
+					font-size: 14px; /* Smaller font size for mobile */
+				}
+				#login-form button {
+					font-size: 14px; /* Smaller font size for mobile */
+				}
+			}
+
+			#main-content {
+				margin-right: 0px;
+				margin-left: 0px;
+			}
+
+			#left-sidebar {
+				background-color: blue;
 			}
 		</style>
 	</head>
@@ -127,21 +164,55 @@
 					const storageList = document.getElementById("storage-list");
 					storageList.innerHTML = "";
 
+					let count = 0;
+
 					for (const [name, info] of Object.entries(data)) {
 						const storageItem = document.createElement("div");
 						storageItem.className = "storage-item";
+						count++;
+						let emoji = "";
 
 						const progress = (info.used / info.total) * 100;
 
+						let progressColor;
+
+						if (progress > 75) {
+							progressColor = "#ff4d4d";
+						} else if (progress > 50) {
+							progressColor = "#ff8f05";
+						} else {
+							progressColor = "#76c7c0";
+						}
+
+						switch (count) {
+							case 1:
+								emoji = "📼";
+								break;
+
+							case 2:
+								emoji = "💾";
+								break;
+
+							case 3:
+								emoji = "🗃️";
+								break;
+
+							default:
+								break;
+						}
+
+						console.log(count);
+						console.log(emoji);
+
 						storageItem.innerHTML = `
-                        <h2>${name}</h2>
-                        <p>Total: ${info.total} GB</p>
-                        <p>Used: ${info.used} GB</p>
-                        <p>Free: ${info.free} GB</p>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: ${progress}%"></div>
-                        </div>
-                    `;
+							<h2>${emoji} ${name}</h2>
+							<p>Total: ${info.total} GB</p>
+							<p>Used: ${info.used} GB</p>
+							<p>Free: ${info.free} GB</p>
+							<div class="progress-bar">
+								<div class="progress" style="width: ${progress}%; background: ${progressColor};"></div>
+							</div>
+						`;
 						storageList.appendChild(storageItem);
 					}
 				} else {
@@ -173,6 +244,26 @@
 					alert("Login failed. Please check your credentials.");
 				}
 			}
+
+			function focusInput(elementId) {
+				document.getElementById(elementId).focus();
+			}
+
+			document
+				.getElementById("username")
+				.addEventListener("keydown", function (event) {
+					if (event.key === "Enter") {
+						focusInput("password");
+					}
+				});
+
+			document
+				.getElementById("password")
+				.addEventListener("keydown", function (event) {
+					if (event.key === "Enter") {
+						login();
+					}
+				});
 
 			// Function to start polling for storage data
 			function startPolling() {
