@@ -162,10 +162,50 @@
 				#left-sidebar {
 					visibility: hidden;
 				}
+
+				#disks {
+					width: 95%;
+					left: 50%;
+					transform: translateX(-50%);
+					max-height: 85vh; /* Slightly smaller height on mobile */
+				}
+			}
+
+			@media (min-width: 800px) {
+				#disks {
+					left: calc(
+						50% + 120px
+					); /* Push it further right for better centering */
+				}
+			}
+			#disks {
+				position: absolute;
+				left: calc(50% + 100px); /* Shift right to balance sidebar */
+				transform: translateX(-50%);
+				width: 75%;
+				max-width: 1000px; /* Prevents being too wide on large screens */
+				padding: 20px;
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				min-height: auto; /* Removes excessive height */
+				max-height: 90vh; /* Prevents overflowing from viewport */
+				overflow-y: auto; /* Enables scrolling if content is too long */
 			}
 		</style>
 	</head>
 	<body>
+		<!-- Sidebar -->
+		<section id="left-sidebar" style="display: none">
+			<ul>
+				<li><a href="#" onclick="showPage('dashboard')">🏠 Dashboard</a></li>
+				<li><a href="#" onclick="showPage('disks')">💾 Disks</a></li>
+				<li><a href="#" onclick="showPage('settings')">⚙️ Settings</a></li>
+				<li><a href="#" onclick="logout()">🚪 Logout</a></li>
+			</ul>
+		</section>
+
+		<!-- Pages -->
 		<div id="login-form">
 			<h2>Login</h2>
 			<input type="text" id="username" placeholder="Username" />
@@ -173,99 +213,42 @@
 			<button onclick="login()">Login</button>
 		</div>
 
-		<div class="container" style="display: none" id="main-content">
-			<button id="logout-button" onclick="logout()">Logout</button>
+		<div id="dashboard" class="page" style="display: none">
+			<h1>Dashboard</h1>
+			<p>Welcome to your dashboard!</p>
+		</div>
 
-			<h1>Orange Pi NAS Storage Monitor</h1>
+		<!-- New Disks Page -->
+		<div id="disks" style="display: none">
+			<h1>Storage Disks</h1>
 			<div id="storage-list"></div>
 		</div>
 
-		<section id="left-sidebar">
-			<ul>
-				<li><a href="">💾 Memory Card</a></li>
-				<li><a href="">🗃️ Backup Drive</a></li>
-				<li><a href="">📼 Flash Drive</a></li>
-			</ul>
-		</section>
+		<div id="settings" class="page" style="display: none">
+			<h1>Settings</h1>
+			<p>Change your preferences here.</p>
+		</div>
 
 		<script>
-			// Function to fetch storage data
-			async function fetchStorageData() {
-				const token = localStorage.getItem("token");
-				if (!token) {
-					return; // Do nothing if there's no token
-				}
-
-				const response = await fetch("/api/storage", {
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
+			function showPage(pageId) {
+				// Hide all pages
+				document.querySelectorAll(".page").forEach((page) => {
+					page.style.display = "none";
 				});
 
-				if (response.ok) {
-					const data = await response.json();
-					const storageList = document.getElementById("storage-list");
-					storageList.innerHTML = "";
+				// Also hide the Disks page manually
+				document.getElementById("disks").style.display = "none";
 
-					let count = 0;
+				// Show selected page
+				document.getElementById(pageId).style.display = "block";
 
-					for (const [name, info] of Object.entries(data)) {
-						const storageItem = document.createElement("div");
-						storageItem.className = "storage-item";
-						count++;
-						let emoji = "";
-
-						const progress = (info.used / info.total) * 100;
-
-						let progressColor;
-
-						if (progress > 75) {
-							progressColor = "#ff4d4d";
-						} else if (progress > 50) {
-							progressColor = "#ff8f05";
-						} else {
-							progressColor = "#76c7c0";
-						}
-
-						switch (count) {
-							case 1:
-								emoji = "📼";
-								break;
-
-							case 2:
-								emoji = "💾";
-								break;
-
-							case 3:
-								emoji = "🗃️";
-								break;
-
-							default:
-								break;
-						}
-
-						console.log(count);
-						console.log(emoji);
-
-						storageItem.innerHTML = `
-							<h2>${emoji} ${name}</h2>
-							<p>Total: ${info.total} GB</p>
-							<p>Used: ${info.used} GB</p>
-							<p>Free: ${info.free} GB</p>
-							<div class="progress-bar">
-								<div class="progress" style="width: ${progress}%; background: ${progressColor};"></div>
-							</div>
-						`;
-						storageList.appendChild(storageItem);
-					}
-				} else {
-					localStorage.clear(); // Clear localStorage on error
-					alert("Failed to fetch storage data. Please log in again.");
-					window.location.reload(); // Reload the page
+				// If "disks" page is opened, fetch storage data
+				if (pageId === "disks") {
+					document.getElementById("disks").style.display = "block"; // Show Disks
+					fetchStorageData();
 				}
 			}
 
-			// Function to handle login
 			async function login() {
 				const username = document.getElementById("username").value;
 				const password = document.getElementById("password").value;
@@ -280,32 +263,84 @@
 				if (data.token) {
 					localStorage.setItem("token", data.token);
 					document.getElementById("login-form").style.display = "none";
-					document.getElementById("main-content").style.display = "block";
-					document.getElementById("left-sidebar").style.display = "block"; // Show sidebar immediately
-					fetchStorageData();
-					startPolling();
+					document.getElementById("left-sidebar").style.display = "block";
+					showPage("dashboard"); // Show dashboard after login
 				} else {
 					alert("Login failed. Please check your credentials.");
 				}
 			}
 
-			// Function to handle logout
 			function logout() {
-				localStorage.clear(); // Clear all data in localStorage
-				window.location.reload(); // Reload the page to show the login form
+				localStorage.clear();
+				location.reload(); // Reload to show login page again
 			}
 
-			// Check if the user is already logged in
+			async function fetchStorageData() {
+				const token = localStorage.getItem("token");
+				if (!token) return; // Stop if not logged in
+
+				const response = await fetch("/api/storage", {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					const storageList = document.getElementById("storage-list");
+					storageList.innerHTML = ""; // Clear previous data
+
+					let count = 0;
+					for (const [name, info] of Object.entries(data)) {
+						const storageItem = document.createElement("div");
+						storageItem.className = "storage-item";
+						count++;
+						let emoji = "";
+
+						const progress = (info.used / info.total) * 100;
+						let progressColor =
+							progress > 75 ? "#ff4d4d" : progress > 50 ? "#ff8f05" : "#76c7c0";
+
+						switch (count) {
+							case 1:
+								emoji = "📼";
+								break;
+							case 2:
+								emoji = "💾";
+								break;
+							case 3:
+								emoji = "🗃️";
+								break;
+						}
+
+						storageItem.innerHTML = `
+						<h2>${emoji} ${name}</h2>
+						<p>Total: ${info.total} GB</p>
+						<p>Used: ${info.used} GB</p>
+						<p>Free: ${info.free} GB</p>
+						<div class="progress-bar">
+							<div class="progress" style="width: ${progress}%; background: ${progressColor};"></div>
+						</div>
+					`;
+						storageList.appendChild(storageItem);
+					}
+				} else {
+					localStorage.clear();
+					alert("Failed to fetch storage data. Please log in again.");
+					window.location.reload();
+				}
+			}
+
+			// Check if user is logged in on page load
 			window.onload = () => {
 				const token = localStorage.getItem("token");
 				if (token) {
 					document.getElementById("login-form").style.display = "none";
-					document.getElementById("main-content").style.display = "block";
-					document.getElementById("left-sidebar").style.display = "block"; // Show sidebar when logged in
-					fetchStorageData();
-					startPolling();
+					document.getElementById("left-sidebar").style.display = "block";
+
+					// Show page from URL or default to dashboard
+					const page = window.location.hash.replace("#", "") || "dashboard";
+					showPage(page);
 				} else {
-					document.getElementById("left-sidebar").style.display = "none"; // Hide sidebar on login page
+					document.getElementById("left-sidebar").style.display = "none";
 				}
 			};
 		</script>
