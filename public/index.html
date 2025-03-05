@@ -100,33 +100,68 @@
 				background: #e60000;
 			}
 
-			/* Media Queries for Mobile Devices */
-			@media (max-width: 600px) {
-				h1 {
-					font-size: 20px; /* Smaller font size for mobile */
-				}
-				.storage-item h2 {
-					font-size: 16px; /* Smaller font size for mobile */
-				}
-				#login-form {
-					padding: 15px; /* Reduce padding for smaller screens */
-				}
-				#login-form input {
-					width: calc(100% - 20px); /* Adjust width for mobile */
-					font-size: 14px; /* Smaller font size for mobile */
-				}
-				#login-form button {
-					font-size: 14px; /* Smaller font size for mobile */
-				}
-			}
-
 			#main-content {
 				margin-right: 0px;
 				margin-left: 0px;
 			}
 
 			#left-sidebar {
-				background-color: blue;
+				all: unset;
+				position: fixed;
+				left: 0;
+				width: 200px;
+				height: 100vh;
+				overflow-y: auto;
+				background-color: #f7f6f3;
+				box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+				z-index: 1;
+			}
+
+			#left-sidebar ul {
+				padding-inline-start: 0;
+			}
+
+			#left-sidebar ul li {
+				font-size: 1.2rem;
+				list-style: none;
+				margin-top: 1rem;
+				width: 100%;
+			}
+
+			#left-sidebar ul li a {
+				all: unset;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				height: 100%;
+			}
+
+			#left-sidebar ul li a:hover {
+				background-color: black;
+			}
+
+			@media (max-width: 600px) {
+				h1 {
+					font-size: 20px;
+				}
+				.storage-item h2 {
+					font-size: 16px;
+				}
+				#login-form {
+					padding: 15px;
+				}
+				#login-form input {
+					width: calc(100% - 20px);
+					font-size: 14px;
+				}
+				#login-form button {
+					font-size: 14px;
+				}
+
+				#left-sidebar {
+					visibility: hidden;
+				}
 			}
 		</style>
 	</head>
@@ -144,6 +179,14 @@
 			<h1>Orange Pi NAS Storage Monitor</h1>
 			<div id="storage-list"></div>
 		</div>
+
+		<section id="left-sidebar">
+			<ul>
+				<li><a href="">💾 Memory Card</a></li>
+				<li><a href="">🗃️ Backup Drive</a></li>
+				<li><a href="">📼 Flash Drive</a></li>
+			</ul>
+		</section>
 
 		<script>
 			// Function to fetch storage data
@@ -238,36 +281,12 @@
 					localStorage.setItem("token", data.token);
 					document.getElementById("login-form").style.display = "none";
 					document.getElementById("main-content").style.display = "block";
-					fetchStorageData(); // Fetch data after login
-					startPolling(); // Start polling after login
+					document.getElementById("left-sidebar").style.display = "block"; // Show sidebar immediately
+					fetchStorageData();
+					startPolling();
 				} else {
 					alert("Login failed. Please check your credentials.");
 				}
-			}
-
-			function focusInput(elementId) {
-				document.getElementById(elementId).focus();
-			}
-
-			document
-				.getElementById("username")
-				.addEventListener("keydown", function (event) {
-					if (event.key === "Enter") {
-						focusInput("password");
-					}
-				});
-
-			document
-				.getElementById("password")
-				.addEventListener("keydown", function (event) {
-					if (event.key === "Enter") {
-						login();
-					}
-				});
-
-			// Function to start polling for storage data
-			function startPolling() {
-				setInterval(fetchStorageData, 5000); // Fetch data every 5 seconds
 			}
 
 			// Function to handle logout
@@ -282,8 +301,11 @@
 				if (token) {
 					document.getElementById("login-form").style.display = "none";
 					document.getElementById("main-content").style.display = "block";
-					fetchStorageData(); // Fetch data if already logged in
-					startPolling(); // Start polling if already logged in
+					document.getElementById("left-sidebar").style.display = "block"; // Show sidebar when logged in
+					fetchStorageData();
+					startPolling();
+				} else {
+					document.getElementById("left-sidebar").style.display = "none"; // Hide sidebar on login page
 				}
 			};
 		</script>
