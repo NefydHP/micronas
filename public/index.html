@@ -119,18 +119,20 @@
 				margin-right: 0px;
 				margin-left: 0px;
 			}
+
 			#left-sidebar {
 				position: fixed;
 				left: 0;
-				width: 260px;
 				height: 100vh;
 				overflow-y: auto;
-				background-color: #f7f6f3; /* Keep original sidebar color */
+				background-color: #f7f6f3; /* original color */
 				box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 				padding: 12px;
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
+				width: auto; /* adapt to content */
+				min-width: 150px; /* set a sensible minimum width */
 			}
 
 			#left-sidebar ul {
@@ -159,18 +161,36 @@
 				display: flex;
 				align-items: center;
 				gap: 12px;
-				width: 100%;
 				padding: 8px 12px;
-				font-size: 15px;
-				font-weight: 500;
-				color: #333; /* Keep dark text for normal state */
+				font-size: 17px; /* slightly larger font size */
+				font-weight: bold; /* bold text */
+				color: #333; /* keep dark text for normal state */
 				cursor: pointer;
 				transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+				/* Remove any fixed width so the link sizes to its content */
 			}
 
 			#left-sidebar ul li a span {
 				flex-grow: 1; /* Ensures text stays aligned */
 				text-align: left; /* Forces text alignment */
+			}
+
+			#disks,
+			#dashboard,
+			#settings {
+				position: absolute;
+				width: 70%;
+				max-width: 1000px;
+				padding: 20px;
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				min-height: auto;
+				max-height: 90vh;
+				overflow-y: auto;
+				/* Use a smaller offset on desktop */
+				left: calc(50% + 87px);
+				transform: translateX(-50%);
 			}
 
 			@media (max-width: 600px) {
@@ -238,48 +258,6 @@
 				}
 			}
 
-			@media (min-width: 800px) {
-				#disks {
-					left: calc(
-						50% + 130px
-					); /* Ensures it's centered considering sidebar */
-					transform: translateX(-50%);
-				}
-
-				#dashboard,
-				#settings {
-					left: calc(50% + 130px);
-					transform: translateX(-50%);
-				}
-			}
-			@media (max-width: 800px) {
-				#disks,
-				#dashboard,
-				#settings {
-					left: 50%; /* Shift back to center */
-					width: 90%; /* Make it a bit more flexible */
-				}
-			}
-
-			#disks,
-			#dashboard,
-			#settings {
-				position: absolute;
-				width: 75%; /* Maintain a good readable width */
-				max-width: 1000px; /* Prevent content from getting too wide */
-				padding: 20px;
-				background: #fff;
-				border-radius: 8px;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-				min-height: auto;
-				max-height: 90vh;
-				overflow-y: auto;
-				left: calc(
-					50% + 130px
-				); /* Default positioning for when sidebar is visible */
-				transform: translateX(-50%);
-			}
-
 			#mobile-menu {
 				display: none; /* Remove !important to allow JavaScript to toggle */
 				position: fixed;
@@ -307,6 +285,22 @@
 				text-decoration: none;
 				color: black;
 				display: block;
+			}
+
+			@media (min-width: 800px) {
+			}
+
+			@media (max-width: 800px) {
+				#disks,
+				#dashboard,
+				#settings {
+					left: 50%;
+					transform: translateX(-50%);
+					width: 80%;
+					max-width: 500px;
+					padding-top: 0;
+					margin-top: 20px;
+				}
 			}
 		</style>
 	</head>
@@ -482,21 +476,22 @@
 			}
 
 			// Check if user is logged in on page load
-
 			window.onload = () => {
 				const token = localStorage.getItem("token");
 
 				if (token) {
 					document.getElementById("login-form").style.display = "none";
-					document.getElementById("left-sidebar").style.display = "block";
+					// Force hide mobile menu immediately on load
+					document.getElementById("mobile-menu").style.display = "none";
 
-					// Only show menu button on small screens
+					// Only show the correct navigation based on screen width
 					if (window.innerWidth <= 800) {
 						document.getElementById("menu-button").style.display = "block";
+						document.getElementById("left-sidebar").style.display = "none";
 					} else {
 						document.getElementById("menu-button").style.display = "none";
+						document.getElementById("left-sidebar").style.display = "block";
 					}
-
 					showPage("dashboard");
 				} else {
 					document.getElementById("menu-button").style.display = "none"; // Hide before login
@@ -519,7 +514,9 @@
 					if (window.innerWidth > 800) {
 						document.getElementById("menu-button").style.display = "none"; // Hide on desktop
 						document.getElementById("mobile-menu").style.display = "none"; // Close menu if open
+						document.getElementById("left-sidebar").style.display = "block";
 					} else {
+						document.getElementById("left-sidebar").style.display = "none";
 						document.getElementById("menu-button").style.display = "block"; // Show on mobile
 					}
 				}
