@@ -69,7 +69,9 @@ app.post("/api/login", (req, res) => {
 	res.json({ token });
 });
 
+const IPADDRESS = "127.0.0.1";
+
 // Start the server
-app.listen(port, () => {
-	console.log(`Server running at http://localhost:${port}`);
+app.listen(port, IPADDRESS, () => {
+	console.log(`Server running at http://${IPADDRESS}:${port}`);
 });
