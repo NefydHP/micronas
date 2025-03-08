@@ -1,9 +1,13 @@
 {
   "name": "orange-pi-monitor",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.0.2",
+  "main": "server.js",
+  "bin": {
+    "orange-pi-monitor": "server.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node server.js"
   },
   "keywords": [],
   "author": "",
