@@ -24,8 +24,8 @@ jobs:
 
       - name: Bump version
         run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "your-github-username"
+          git config --global user.email "nefydhp@gmail.com"
+          git config --global user.name "nefydhp"
           npm version patch -m "Auto-bump version [skip ci]"
           git push origin main --follow-tags
 
