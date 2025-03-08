@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build package
-        run: npm run build # If needed, change or remove
-
       - name: Bump version
         run: |
           git config --global user.email "your-email@example.com"
