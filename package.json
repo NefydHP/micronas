@@ -1,5 +1,5 @@
 {
-  "name": "orange-pi-monitor",
+  "name": "micronas-monitor",
   "version": "1.0.2",
   "main": "server.js",
   "bin": {
@@ -7,6 +7,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "npm publish --access public",
     "deploy": "node server.js"
   },
   "keywords": [],
