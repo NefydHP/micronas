@@ -8,8 +8,10 @@
 		<script src="script.js" defer></script>
 	</head>
 	<body>
+		<!-- mobile menu -->
+
 		<button id="menu-button" onclick="toggleMenu()">☰</button>
-		<div id="mobile-menu" style="display: none">
+		<nav id="mobile-menu" style="display: none">
 			<ul>
 				<li>
 					<a href="#" onclick="showPage('dashboard'); toggleMenu()"
@@ -26,10 +28,20 @@
 				</li>
 				<li><a href="#" onclick="logout(); toggleMenu()">🚪 Logout</a></li>
 			</ul>
-		</div>
+		</nav>
 
-		<!-- sidebar -->
-		<section id="left-sidebar" style="display: none">
+		<!-- left sidebar -->
+
+		<nav id="left-sidebar" style="display: none">
+			<figure id="sidebar-logo">
+				<img
+					src="images/logo-orange.png"
+					alt="micronas-logo"
+					draggable="false"
+				/>
+				<span>micronas</span>
+			</figure>
+
 			<ul>
 				<li>
 					<a href="#" onclick="showPage('dashboard')"
@@ -44,13 +56,14 @@
 						>⚙️ <span>Settings</span></a
 					>
 				</li>
-				<li>
-					<a href="#" onclick="logout()">🚪 <span>Logout</span></a>
+				<li id="logout-li">
+					<a href="#" onclick="logout()">📍 <span>Logout</span></a>
 				</li>
 			</ul>
-		</section>
+		</nav>
 
 		<!-- pages -->
+
 		<div id="login-form">
 			<h2>Login</h2>
 			<input
@@ -72,7 +85,11 @@
 			<h1>🏠 <span>Dashboard</span></h1>
 
 			<figure class="banner">
-				<img src="images/banner.png" alt="micronas-banner" draggable="false" />
+				<img
+					src="images/banner-orange.png"
+					alt="micronas-banner"
+					draggable="false"
+				/>
 			</figure>
 
 			<div class="dashboard-panels">
@@ -127,7 +144,6 @@
 			</div>
 		</div>
 
-		<!-- new disks page -->
 		<div id="disks" class="page" style="display: none">
 			<h1>💾 <span>Storage Disks</span></h1>
 			<div id="storage-list"></div>
@@ -135,7 +151,6 @@
 
 		<div id="settings" class="page" style="display: none">
 			<h1>⚙️ <span>Settings</span></h1>
-			<p>Change your preferences here.</p>
 		</div>
 	</body>
 </html>

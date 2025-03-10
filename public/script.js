@@ -85,7 +85,6 @@ document.getElementById("ipAddress").addEventListener("input", function (e) {
 	this.value = this.value.replace(/[^0-9.]/g, "");
 });
 	
-
 async function fetchStorageData() {
 	const token = localStorage.getItem("token");
 	if (!token) return; // stop if not logged in

@@ -1,6 +1,6 @@
 {
   "name": "micronas-monitor",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "server.js",
   "bin": {
     "orange-pi-monitor": "server.js"

@@ -2,6 +2,15 @@
 	font-family: monospace;
 }
 
+img {
+	user-select: none;
+}
+
+::selection {
+	background: #ff902e; /* Orange background */
+	color: white; /* White text */
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -140,13 +149,44 @@ h1 {
 	min-width: 150px; /* set a sensible minimum width */
 }
 
+#sidebar-logo {
+	display: flex;
+	margin: 10% 0;
+	width: fit-content;
+	flex-direction: row;
+	justify-content: left;
+	gap: 10px;
+	border-style: hidden;
+	border-radius: 20px;
+	box-shadow: 0 0 2px black;
+	padding: 15px;
+	justify-self: center;
+}
+
+#sidebar-logo img {
+	width: 40px;
+}
+
+#sidebar-logo span {
+	font-size: 1.2rem;
+	align-content: center;
+	text-align: center;
+	user-select: none;
+}
+
 #left-sidebar ul {
+	display: flex;
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	gap: 4px; /* Keeps consistent spacing between items */
+	height: calc(100dvh - 115px);
+}
+
+/* / this is supposed to be the logout button /  */
+#left-sidebar ul > :last-child {
+	margin-top: auto;
 }
 
 #left-sidebar ul li {
@@ -381,5 +421,9 @@ h1 {
 
 	.page h1 {
 		margin: 5% auto;
+	}
+
+	.dashboard-panels {
+		padding-bottom: 20px;
 	}
 }
