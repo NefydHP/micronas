@@ -3,7 +3,7 @@
 
 This is a web page for users to view, access, and configure their very own MICRO NAS through a user-friendly interface.
 
-![Logo](https://github.com/NefydHP/micronas/blob/main/481179395_2106799873085385_3002405446289898142_n.png)
+![Logo](public/images/banner.png)
 ## Acknowledgements
 
  - [Orange Pi Zero 3](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-3.html) - The SBC (Single Board Computer) used as the base for the MICRO NAS.
