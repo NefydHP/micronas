@@ -1,13 +1,12 @@
 {
   "name": "micronas-monitor",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": "server.js",
   "bin": {
     "orange-pi-monitor": "server.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "npm publish --access public",
     "deploy": "node server.js"
   },
   "keywords": [],

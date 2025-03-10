@@ -10,7 +10,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh; /* Use min-height instead of height for better responsiveness */
+	min-height: 100dvh;
 }
 
 .container {

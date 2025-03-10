@@ -71,7 +71,7 @@ app.post("/api/login", (req, res) => {
 	res.json({ token });
 });
 
-const IPADDRESS = "127.0.0.1";
+const IPADDRESS = "192.168.1.25";
 
 // Start the server
 app.listen(port, IPADDRESS, () => {
