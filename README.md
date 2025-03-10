@@ -3,7 +3,7 @@
 
 This is a web page for users to view, access, and configure their very own MICRO NAS through a user-friendly interface.
 
-![Logo](https://github.com/NefydHP/micronas/blob/main/481179395_2106799873085385_3002405446289898142_n.png)
+![Logo](public/images/banner.png)
 ## Acknowledgements
 
  - [Orange Pi Zero 3](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-3.html) - The SBC (Single Board Computer) used as the base for the MICRO NAS.
@@ -38,7 +38,7 @@ Ensure you have Node.js installed. If you don't have it, download and install it
 You can run the tool directly using npx (no installation needed):
 
 ```bash
-npx orange-pi-monitor
+npx micronas-monitor
 ```
 
 **Install Locally (Recommended for Projects)**
@@ -46,13 +46,13 @@ npx orange-pi-monitor
 If you want to use the tool in a project, install it locally:
 
 ```bash
-npm install orange-pi-monitor
+npm install micronas-monitor
 ```
 
 Then run it with:
 
 ```bash
-npx orange-pi-monitor
+npx micronas-monitor
 ```
 
 **Install Globally (Recommended for System-Wide Use)**
@@ -60,13 +60,13 @@ npx orange-pi-monitor
 To install it globally on your system:
 
 ```bash
-npm install -g orange-pi-monitor
+npm install -g micronas-monitor
 ```
 
 Now you can run it from anywhere:
 
 ```bash
-orange-pi-monitor
+micronas-monitor
 ```
 
 ## Uninstallation
@@ -75,13 +75,13 @@ If you no longer need it, remove it with:
 **For global installation:**
 
 ```bash
-npm uninstall -g orange-pi-monitor
+npm uninstall -g micronas-monitor
 ```
 
 **For local installation:**
 
 ```bash
-npm uninstall orange-pi-monitor
+npm uninstall micronas-monitor
 ```
 ## Features
 
