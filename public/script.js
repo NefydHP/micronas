@@ -19,13 +19,14 @@ function showPage(pageId) {
 }
 
 async function login() {
+	const ipAddress = document.getElementById("ipAddress").value;
 	const username = document.getElementById("username").value;
 	const password = document.getElementById("password").value;
-
+	
 	const response = await fetch("/api/login", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ username, password }),
+		body: JSON.stringify({ ipAddress, username, password}),
 	});
 
 	const data = await response.json();
@@ -49,6 +50,16 @@ function logout() {
 	location.reload(); // reload to show login page again
 }
 
+// focus on username input if "enter" is clicked while on ipAddress input
+document
+	.getElementById("ipAddress")
+	.addEventListener("keydown", function (event) {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			document.getElementById("username").focus();
+		}
+	});
+
 // focus on password input if "enter" is clicked while on username input
 document
 	.getElementById("username")
@@ -68,6 +79,12 @@ document
 			login();
 		}
 	});
+
+
+document.getElementById("ipAddress").addEventListener("input", function (e) {
+	this.value = this.value.replace(/[^0-9.]/g, "");
+});
+	
 
 async function fetchStorageData() {
 	const token = localStorage.getItem("token");

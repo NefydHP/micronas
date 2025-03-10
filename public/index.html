@@ -53,14 +53,28 @@
 		<!-- pages -->
 		<div id="login-form">
 			<h2>Login</h2>
+			<input
+				type="text"
+				id="ipAddress"
+				name="ipAddress"
+				placeholder="IP Address"
+				pattern="^(?:\d{1,3}\.){3}\d{1,3}$"
+				title="Enter a valid IP address (e.g., 192.168.1.1)"
+				required
+			/>
+
 			<input type="text" id="username" placeholder="Username" />
 			<input type="password" id="password" placeholder="Password" />
 			<button onclick="login()">Login</button>
 		</div>
 
 		<div id="dashboard" class="page" style="display: none">
-			<h1>Dashboard</h1>
-			<p>Welcome to your dashboard!</p>
+			<h1>🏠 <span>Dashboard</span></h1>
+
+			<figure class="banner">
+				<img src="images/banner.png" alt="micronas-banner" draggable="false" />
+			</figure>
+
 			<div class="dashboard-panels">
 				<div class="panel">
 					<div class="panel-icon">🍊</div>
@@ -114,13 +128,13 @@
 		</div>
 
 		<!-- new disks page -->
-		<div id="disks" style="display: none">
-			<h1>Storage Disks</h1>
+		<div id="disks" class="page" style="display: none">
+			<h1>💾 <span>Storage Disks</span></h1>
 			<div id="storage-list"></div>
 		</div>
 
 		<div id="settings" class="page" style="display: none">
-			<h1>Settings</h1>
+			<h1>⚙️ <span>Settings</span></h1>
 			<p>Change your preferences here.</p>
 		</div>
 	</body>

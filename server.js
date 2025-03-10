@@ -55,13 +55,13 @@ app.get("/api/storage", authenticateToken, (req, res) => {
 
 // Login endpoint (accepts any username and password)
 app.post("/api/login", (req, res) => {
-	const { username, password } = req.body;
+	const { ipAddress, username, password } = req.body;
 
 	// Input validation
-	if (!username || !password) {
+	if (!ipAddress || !username || !password) {
 		return res
 			.status(400)
-			.json({ error: "Username and password are required." });
+			.json({ error: "Ip address, username and password are all required." });
 	}
 
 	// Generate a token for any username and password
