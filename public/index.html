@@ -9,9 +9,14 @@
 	</head>
 	<body>
 		<!-- mobile menu -->
+		<label class="theme-toggle mobile-theme-toggle">
+			<input type="checkbox" id="theme-toggle" />
+			<span class="slider"></span>
+			<span class="toggle-label">Dark Mode</span>
+		</label>
 
 		<button id="menu-button" onclick="toggleMenu()">☰</button>
-		<nav id="mobile-menu" style="display: none">
+		<nav id="mobile-menu">
 			<ul>
 				<li>
 					<a href="#" onclick="showPage('dashboard'); toggleMenu()"
@@ -19,13 +24,9 @@
 					>
 				</li>
 				<li>
-					<a href="#" onclick="showPage('disks'); toggleMenu()">💾 Disks</a>
+					<a href="#" onclick="showPage('drives'); toggleMenu()">💾 Drives</a>
 				</li>
-				<li>
-					<a href="#" onclick="showPage('settings'); toggleMenu()"
-						>⚙️ Settings</a
-					>
-				</li>
+
 				<li><a href="#" onclick="logout(); toggleMenu()">🚪 Logout</a></li>
 			</ul>
 		</nav>
@@ -35,7 +36,7 @@
 		<nav id="left-sidebar" style="display: none">
 			<figure id="sidebar-logo">
 				<img
-					src="images/logo-orange.png"
+					src="images/logo-2cols.png"
 					alt="micronas-logo"
 					draggable="false"
 				/>
@@ -49,13 +50,15 @@
 					>
 				</li>
 				<li>
-					<a href="#" onclick="showPage('disks')">💾 <span>Disks</span></a>
+					<a href="#" onclick="showPage('drives')">💾 <span>Drives</span></a>
 				</li>
-				<li>
-					<a href="#" onclick="showPage('settings')"
-						>⚙️ <span>Settings</span></a
-					>
-				</li>
+
+				<label class="theme-toggle">
+					<input type="checkbox" id="theme-toggle" />
+					<span class="slider"></span>
+					<span class="toggle-label">Dark Mode</span>
+				</label>
+
 				<li id="logout-li">
 					<a href="#" onclick="logout()">📍 <span>Logout</span></a>
 				</li>
@@ -144,13 +147,9 @@
 			</div>
 		</div>
 
-		<div id="disks" class="page" style="display: none">
-			<h1>💾 <span>Storage Disks</span></h1>
+		<div id="drives" class="page" style="display: none">
+			<h1>💾 <span>Storage Drives</span></h1>
 			<div id="storage-list"></div>
-		</div>
-
-		<div id="settings" class="page" style="display: none">
-			<h1>⚙️ <span>Settings</span></h1>
 		</div>
 	</body>
 </html>

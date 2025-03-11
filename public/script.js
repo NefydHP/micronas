@@ -5,15 +5,15 @@ function showPage(pageId) {
 		page.style.display = "none";
 	});
 
-	// also hide the disks page manually
-	document.getElementById("disks").style.display = "none";
+	// also hide the drives page manually
+	document.getElementById("drives").style.display = "none";
 
 	// show selected page
 	document.getElementById(pageId).style.display = "block";
 
-	// if "disks" page is opened, fetch storage data
-	if (pageId === "disks") {
-		document.getElementById("disks").style.display = "block"; // Show Disks
+	// if "drives" page is opened, fetch storage data
+	if (pageId === "drives") {
+		document.getElementById("drives").style.display = "block"; // Show drives
 		fetchStorageData();
 	}
 }
@@ -39,16 +39,43 @@ async function login() {
 		// ensure menu button appears immediately if on mobile
 		if (window.innerWidth <= 800) {
 			document.getElementById("menu-button").style.display = "block";
-		}
+			document.querySelector(".mobile-theme-toggle").style.display = "flex";
+		} 
+
 	} else {
 		alert("Login failed. Please check your credentials.");
 	}
 }
 
 function logout() {
-	localStorage.clear();
-	location.reload(); // reload to show login page again
+	const theme = localStorage.getItem("theme"); // Save theme before clearing storage
+	localStorage.clear(); // Clear everything else
+	localStorage.setItem("theme", theme); // Restore theme setting
+	window.location.reload(); // Refresh page
 }
+
+
+// dark theme toggle
+document.addEventListener("DOMContentLoaded", () => {
+	const themeToggles = document.querySelectorAll("#theme-toggle");
+
+	function applyTheme(isDark) {
+		document.body.classList.toggle("dark-mode", isDark);
+		localStorage.setItem("theme", isDark ? "dark" : "light");
+		themeToggles.forEach(toggle => toggle.checked = isDark);
+	}
+
+	// Load saved theme
+	const isDarkMode = localStorage.getItem("theme") === "dark";
+	applyTheme(isDarkMode);
+
+	// Add event listeners to all theme toggles
+	themeToggles.forEach(toggle => {
+		toggle.addEventListener("change", () => {
+			applyTheme(toggle.checked);
+		});
+	});
+});
 
 // focus on username input if "enter" is clicked while on ipAddress input
 document
@@ -160,17 +187,13 @@ window.onload = () => {
 	} else {
 		document.getElementById("menu-button").style.display = "none"; // hide before login
 		document.getElementById("mobile-menu").style.display = "none"; // hide dropdown before login
+		document.querySelector(".mobile-theme-toggle").style.display = "none";
 	}
 };
 
 function toggleMenu() {
 	const menu = document.getElementById("mobile-menu");
-
-	if (menu.style.display === "none" || menu.style.display === "") {
-		menu.style.display = "block";
-	} else {
-		menu.style.display = "none";
-	}
+	menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
 
 window.onresize = () => {

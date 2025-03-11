@@ -72,7 +72,7 @@ app.post("/api/login", (req, res) => {
 });
 
 const DEFAULTADDRESS = "127.0.0.1" // loopback address
-const IPADDRESS = "192.168.1.25";
+const IPADDRESS = DEFAULTADDRESS;
 // Start the server
 app.listen(port, IPADDRESS, () => {
 	console.log(`Server running at http://${IPADDRESS}:${port}`);
