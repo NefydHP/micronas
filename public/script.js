@@ -1,4 +1,3 @@
-
 function showPage(pageId) {
 	// hide all pages
 	document.querySelectorAll(".page").forEach((page) => {
@@ -22,11 +21,11 @@ async function login() {
 	const ipAddress = document.getElementById("ipAddress").value;
 	const username = document.getElementById("username").value;
 	const password = document.getElementById("password").value;
-	
+
 	const response = await fetch("/api/login", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ ipAddress, username, password}),
+		body: JSON.stringify({ ipAddress, username, password }),
 	});
 
 	const data = await response.json();
@@ -40,8 +39,8 @@ async function login() {
 		if (window.innerWidth <= 800) {
 			document.getElementById("menu-button").style.display = "block";
 			document.querySelector(".mobile-theme-toggle").style.display = "flex";
-		} 
-
+			document.querySelector(".mobile-sidebar-logo").style.display = "flex";
+		}
 	} else {
 		alert("Login failed. Please check your credentials.");
 	}
@@ -54,7 +53,6 @@ function logout() {
 	window.location.reload(); // Refresh page
 }
 
-
 // dark theme toggle
 document.addEventListener("DOMContentLoaded", () => {
 	const themeToggles = document.querySelectorAll("#theme-toggle");
@@ -62,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function applyTheme(isDark) {
 		document.body.classList.toggle("dark-mode", isDark);
 		localStorage.setItem("theme", isDark ? "dark" : "light");
-		themeToggles.forEach(toggle => toggle.checked = isDark);
+		themeToggles.forEach((toggle) => (toggle.checked = isDark));
 	}
 
 	// Load saved theme
@@ -70,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	applyTheme(isDarkMode);
 
 	// Add event listeners to all theme toggles
-	themeToggles.forEach(toggle => {
+	themeToggles.forEach((toggle) => {
 		toggle.addEventListener("change", () => {
 			applyTheme(toggle.checked);
 		});
@@ -106,7 +104,6 @@ document
 			login();
 		}
 	});
-
 
 document.getElementById("ipAddress").addEventListener("input", function (e) {
 	this.value = this.value.replace(/[^0-9.]/g, "");
@@ -188,12 +185,13 @@ window.onload = () => {
 		document.getElementById("menu-button").style.display = "none"; // hide before login
 		document.getElementById("mobile-menu").style.display = "none"; // hide dropdown before login
 		document.querySelector(".mobile-theme-toggle").style.display = "none";
+		document.querySelector(".mobile-sidebar-logo").style.display = "none";
 	}
 };
 
 function toggleMenu() {
 	const menu = document.getElementById("mobile-menu");
-	menu.style.display = (menu.style.display === "block") ? "none" : "block";
+	menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
 window.onresize = () => {

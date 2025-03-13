@@ -1,79 +1,95 @@
-#!/usr/bin/env node
-
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const jwt = require("jsonwebtoken");
+const { exec } = require("child_process");
 
 const app = express();
-const port = 3000;
-
-// Middleware
+const DEFAULTPORT = 3000;
+const port = 80;
 app.use(cors());
 app.use(bodyParser.json());
-
-// Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, "public")));
 
-// Mock data for storage monitoring
-const mockStorageData = {
-	FlashDrive: { total: 64, used: 52 }, // in GB
-	MemoryCard: { total: 64, used: 47 },
-	BackupDrive: { total: 2, used: 0.7 },
-};
+function getStorageDataAsync() {
+    return new Promise((resolve, reject) => {
+        const isWindows = process.platform === "win32";
+        const command = isWindows
+            ? "wmic logicaldisk get size,freespace,caption"
+            : "df -kP";
 
-Object.values(mockStorageData).forEach((device) => {
-	device.free = device.total - device.used;
+        exec(command, (error, stdout) => {
+            if (error) {
+                console.error("Error fetching disk info:", error);
+                return reject("Failed to retrieve storage info");
+            }
+
+            let storageInfo = {};
+            const bytesToGiB = (bytes) => +(bytes / 1073741824).toFixed(2);
+
+            if (isWindows) {
+                const lines = stdout.trim().split("\n").slice(1);
+                lines.forEach((line) => {
+                    const [drive, free, total] = line.trim().split(/\s+/);
+                    storageInfo[drive] = {
+                        total: bytesToGiB(total),
+                        free: bytesToGiB(free),
+                        used: bytesToGiB(total - free),
+                    };
+                });
+            } else {
+                const lines = stdout.trim().split("\n").slice(1);
+                lines.forEach((line) => {
+                    const parts = line.split(/\s+/);
+                    if (parts.length >= 6) {
+                        const mount = parts[5];
+                        storageInfo[mount] = {
+                            total: bytesToGiB(parts[1] * 1024),
+                            used: bytesToGiB(parts[2] * 1024),
+                            free: bytesToGiB(parts[3] * 1024),
+                        };
+                    }
+                });
+            }
+            resolve(storageInfo);
+        });
+    });
+}
+
+app.get("/api/storage", async (req, res) => {
+    try {
+        const storageInfo = await getStorageDataAsync();
+        res.json(storageInfo);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
 });
 
-// Secret key for JWT (should be stored securely in production)
 const JWT_SECRET = "secret-key";
 
-// Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
-	const authHeader = req.headers["authorization"];
-	const token = authHeader && authHeader.split(" ")[1]; // Extract token from "Bearer <token>"
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "Access denied. No token provided." });
 
-	if (!token) {
-		return res.status(401).json({ error: "Access denied. No token provided." });
-	}
-
-	jwt.verify(token, JWT_SECRET, (err, user) => {
-		if (err) {
-			return res.status(403).json({ error: "Invalid or expired token." });
-		}
-		req.user = user; // Attach the user payload to the request object
-		next();
-	});
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ error: "Invalid or expired token." });
+        req.user = user;
+        next();
+    });
 };
 
-// API endpoint to get storage data (protected by authentication)
-app.get("/api/storage", authenticateToken, (req, res) => {
-	res.json(mockStorageData);
-});
-
-// Login endpoint (accepts any username and password)
 app.post("/api/login", (req, res) => {
-	const { ipAddress, username, password } = req.body;
-
-	// Input validation
-	if (!ipAddress || !username || !password) {
-		return res
-			.status(400)
-			.json({ error: "Ip address, username and password are all required." });
-	}
-
-	// Generate a token for any username and password
-	const token = jwt.sign({ username, role: "read-only" }, JWT_SECRET, {
-		expiresIn: "1h",
-	}); // Default role: 'read-only'
-	res.json({ token });
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(400).json({ error: "Username and password required." });
+    }
+    const token = jwt.sign({ username, role: "read-only" }, JWT_SECRET, { expiresIn: "1h" });
+    res.json({ token });
 });
 
-const DEFAULTADDRESS = "127.0.0.1" // loopback address
-const IPADDRESS = DEFAULTADDRESS;
-// Start the server
+const IPADDRESS = "0.0.0.0";
 app.listen(port, IPADDRESS, () => {
-	console.log(`Server running at http://${IPADDRESS}:${port}`);
+    console.log(`Server running at http://${IPADDRESS}:${port}`);
 });

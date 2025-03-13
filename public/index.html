@@ -3,12 +3,17 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Orange Pi NAS Monitor</title>
+		<title>MICRO NAS Monitor</title>
 		<link rel="stylesheet" href="style.css" />
 		<script src="script.js" defer></script>
 	</head>
 	<body>
 		<!-- mobile menu -->
+		<figure id="sidebar-logo" class="mobile-sidebar-logo">
+			<img src="images/logo-2cols.png" alt="micronas-logo" draggable="false" />
+			<span>micronas</span>
+		</figure>
+
 		<label class="theme-toggle mobile-theme-toggle">
 			<input type="checkbox" id="theme-toggle" />
 			<span class="slider"></span>
@@ -145,6 +150,39 @@
 					</div>
 				</div>
 			</div>
+
+			<footer class="github-footer">
+				<div id="github-link" class="container">
+					<a href="https://github.com/NefydHP/micronas/" target="_blank">
+						<img
+							src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+							alt="Github Profile"
+							class="github-icon"
+						/>
+						<span>Repository</span>
+					</a>
+				</div>
+				<div class="container">
+					<a href="https://github.com/nefydhp" target="_blank">
+						<img
+							src="https://avatars.githubusercontent.com/u/110378132?v=4"
+							alt="Genesis Github Profile"
+							class="github-icon"
+						/>
+						<span>Genesis</span>
+					</a>
+				</div>
+				<div class="container">
+					<a href="https://github.com/SqueekCheese" target="_blank">
+						<img
+							src="https://avatars.githubusercontent.com/u/181371858?v=4"
+							alt="Daniel Github Profile"
+							class="github-icon"
+						/>
+						<span>Daniel</span>
+					</a>
+				</div>
+			</footer>
 		</div>
 
 		<div id="drives" class="page" style="display: none">
