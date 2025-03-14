@@ -108,7 +108,7 @@ document
 document.getElementById("ipAddress").addEventListener("input", function (e) {
 	this.value = this.value.replace(/[^0-9.]/g, "");
 });
-	
+
 async function fetchStorageData() {
 	const token = localStorage.getItem("token");
 	if (!token) return; // stop if not logged in
@@ -146,6 +146,7 @@ async function fetchStorageData() {
 			}
 
 			storageItem.innerHTML = `
+			<a href="#explorer"></a>
 			<h2>${emoji} ${name}</h2>
 			<p>Total: ${info.total} GB</p>
 			<p>Used: ${info.used} GB</p>
