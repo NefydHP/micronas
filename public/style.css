@@ -345,7 +345,7 @@ h1 {
 	width: 80%;
 	height: 80%;
 	padding: 8% 2% 8% 2%;
-	transition: all 0.5s ease;
+	transition: all 0.4s ease;
 	backdrop-filter: blur(2px);
 }
 
