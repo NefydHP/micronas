@@ -3,7 +3,7 @@
 
 This is a web page for users to view, access, and configure their very own MICRO NAS through a user-friendly interface.
 
-![Logo](public/images/banner-orange.png)
+![Logo](public/images/banner-orange-darkmode.png)
 ## Acknowledgements
 
  - [Orange Pi Zero 3](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-3.html) - The SBC (Single Board Computer) used as the base for the MICRO NAS.
@@ -85,10 +85,11 @@ npm uninstall micronas-monitor
 ```
 ## Features
 
-- Dashboard for introduction, resources, links, and socials.
+- Dashboard for resources and socials.
 - Disks Page for viewing and modifying files inside your MICRO NAS.
-- Settings Page for configuring website theme (light/dark), among other things.
 - Login Page for initializing the MICRO NAS' IP address, the username you wish to use, and the user password.
+- Dark mode
+   
 ## Feedback
 
 If you have any feedback, please reach out to us at group2.iii.gnhs@gmail.com
