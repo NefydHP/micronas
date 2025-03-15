@@ -164,6 +164,11 @@ async function fetchStorageData() {
 	}
 }
 
+// prevent dragging
+document
+	.querySelector("#explorer:target #explorer-cover span")
+	.addEventListener("dragstart", (event) => event.preventDefault());
+
 // check if user is logged in on page load
 window.onload = () => {
 	const token = localStorage.getItem("token");
