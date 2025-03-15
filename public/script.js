@@ -146,7 +146,6 @@ async function fetchStorageData() {
 			}
 
 			storageItem.innerHTML = `
-			<a href="#explorer"></a>
 			<h2>${emoji} ${name}</h2>
 			<p>Total: ${info.total} GB</p>
 			<p>Used: ${info.used} GB</p>
@@ -164,10 +163,63 @@ async function fetchStorageData() {
 	}
 }
 
-// prevent dragging
-document
-	.querySelector("#explorer:target #explorer-cover span")
-	.addEventListener("dragstart", (event) => event.preventDefault());
+// make file manager movable via mouselet offsetX = 0, offsetY = 0, isDragging = false;
+let currentX = 0,
+	currentY = 0,
+	lastX = 0,
+	lastY = 0; // Track movement
+
+const draggable = document.getElementById("explorer");
+
+draggable.addEventListener("mousedown", (e) => {
+	isDragging = true;
+
+	// Get mouse position relative to element
+	offsetX = e.clientX - lastX;
+	offsetY = e.clientY - lastY;
+
+	draggable.style.cursor = "grabbing";
+
+	// Disable interactions with everything else
+	document.body.style.pointerEvents = "none";
+	draggable.style.pointerEvents = "all";
+});
+
+document.addEventListener("mousemove", (e) => {
+	if (!isDragging) return;
+
+	// Calculate new position based on previous position
+	currentX = e.clientX - offsetX;
+	currentY = e.clientY - offsetY;
+
+	// Apply smooth movement
+	draggable.style.transform = `translate(${currentX}px, ${currentY}px)`;
+});
+
+document.addEventListener("mouseup", () => {
+	isDragging = false;
+	draggable.style.cursor = "grab";
+
+	// Store last known position for next drag
+	lastX = currentX;
+	lastY = currentY;
+
+	// Re-enable interactions
+	document.body.style.pointerEvents = "all";
+});
+
+// add functionality to close button in file explorer
+document.getElementById("close-button").addEventListener("click", () => {
+	document.getElementById("explorer").classList.toggle("explorer-opened");
+});
+
+// open file explorer when a drive is clicked
+document.getElementById("storage-list").addEventListener("click", (event) => {
+	const item = event.target.closest(".storage-item"); // Check if a storage item was clicked
+	if (item) {
+		document.getElementById("explorer").classList.add("explorer-opened");
+	}
+});
 
 // check if user is logged in on page load
 window.onload = () => {
