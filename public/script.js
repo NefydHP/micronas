@@ -182,18 +182,8 @@ draggable.addEventListener("mousedown", (e) => {
 
 	// Disable interactions with everything else
 	document.body.style.pointerEvents = "none";
+	document.body.style.userSelect = "none";
 	draggable.style.pointerEvents = "all";
-});
-
-document.addEventListener("mousemove", (e) => {
-	if (!isDragging) return;
-
-	// Calculate new position based on previous position
-	currentX = e.clientX - offsetX;
-	currentY = e.clientY - offsetY;
-
-	// Apply smooth movement
-	draggable.style.transform = `translate(${currentX}px, ${currentY}px)`;
 });
 
 document.addEventListener("mouseup", () => {
@@ -208,6 +198,17 @@ document.addEventListener("mouseup", () => {
 	document.body.style.pointerEvents = "all";
 });
 
+document.addEventListener("mousemove", (e) => {
+	if (!isDragging) return;
+
+	// Calculate new position based on previous position
+	currentX = e.clientX - offsetX;
+	currentY = e.clientY - offsetY;
+
+	// Apply smooth movement
+	draggable.style.transform = `translate(${currentX}px, ${currentY}px)`;
+});
+
 // add functionality to close button in file explorer
 document.getElementById("close-button").addEventListener("click", () => {
 	document.getElementById("explorer").classList.toggle("explorer-opened");
@@ -218,6 +219,31 @@ document.getElementById("storage-list").addEventListener("click", (event) => {
 	const item = event.target.closest(".storage-item"); // Check if a storage item was clicked
 	if (item) {
 		document.getElementById("explorer").classList.add("explorer-opened");
+
+		const storageItemName = item.querySelector("h2").innerHTML;
+		const storageItemNameContainer = document
+			.getElementById("drive-name")
+			.querySelector("span");
+
+		storageItemNameContainer.innerHTML = "[ " + storageItemName.slice(3) + " ]";
+	}
+});
+
+// give every folder a folder image
+const files = document.querySelectorAll(".file");
+
+files.forEach((file) => {
+	const fileImage = Object.assign(document.createElement("img"), {
+		src: "images/file.png",
+		alt: "file",
+	});
+	file.prepend(fileImage);
+});
+
+// stop file image dragging
+document.addEventListener("dragstart", (e) => {
+	if (e.target.closest(".file")) {
+		e.preventDefault();
 	}
 });
 
