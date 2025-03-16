@@ -1,0 +1,224 @@
+[33mcommit f114eeae4af9435e9e25fa079d6c6c152981bba9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sun Mar 16 19:03:24 2025 +0800
+
+    beta v0.1
+
+[33mcommit 7cba191b327bfbf57245493f0d910360ebfc7d33[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sun Mar 16 00:01:27 2025 +0800
+
+    massive progress on file explorer
+
+[33mcommit a38b0b9e7c39f6e4b87b668cb25977266a4f4fc1[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 15 08:40:22 2025 +0800
+
+    file explorer progress (unfinished)
+
+[33mcommit 3fd865450d744c11abd186f64a791cd8996dfd3a[m[33m ([m[1;32mmy-temp-branch[m[33m)[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Fri Mar 14 18:00:25 2025 +0800
+
+    reverted to mock data, and added foundation of file explorer in drives page.
+
+[33mcommit 58edfacb3a5fa0721fc8b939824fab8f581728eb[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Fri Mar 14 17:41:19 2025 +0800
+
+    reverted to mock data, and added foundation of file explorer in drives page.
+
+[33mcommit 119a164de74147f1784919461be53e1bd317dbc6[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Thu Mar 13 11:36:55 2025 +0800
+
+    made drives read real data based on the host's drives
+
+[33mcommit 4658083ea742525ff9b89e47639ff9bcfb6f18f4[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Tue Mar 11 17:26:34 2025 +0800
+
+    added darkmode\nchanged sidebar logo colors\nmade login page more responsiveness\n improved colors
+
+[33mcommit 955f05c69183f8abec85e8e6c9ccd2c9bd2ba238[m
+Author: NefydHP <110378132+NefydHP@users.noreply.github.com>
+Date:   Mon Mar 10 21:54:45 2025 +0800
+
+    Update README.md
+
+[33mcommit 3a3af220e1eedc96075a58825a36bff9451cd5fb[m
+Merge: 4687b02 2de0368
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 10 21:51:06 2025 +0800
+
+    added logo on sidebar\nmoved logout button to the bottom of the sidebar
+
+[33mcommit 4687b02a6fe0be4252c9156e6e892024b43030b8[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 10 21:49:34 2025 +0800
+
+    added logo on sidebar\nmoved logout button to the bottom of the sidebar
+
+[33mcommit 2de0368c7477bc9f6340890a396e3598c1dd118b[m
+Author: NefydHP <110378132+NefydHP@users.noreply.github.com>
+Date:   Mon Mar 10 19:14:09 2025 +0800
+
+    Update README.md
+
+[33mcommit 8096433983874b419702198408d0c638a83bc969[m
+Author: NefydHP <110378132+NefydHP@users.noreply.github.com>
+Date:   Mon Mar 10 12:33:31 2025 +0800
+
+    Update README.md
+
+[33mcommit 07c9d9b29dc25fea3520af11535f251e5ff0b97c[m
+Author: NefydHP <110378132+NefydHP@users.noreply.github.com>
+Date:   Mon Mar 10 12:31:43 2025 +0800
+
+    Update README.md
+
+[33mcommit 6b3d31a4e3ca102a9082deecfaa5aca8ce6d58fe[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 10 12:27:10 2025 +0800
+
+    more flexible ip address hosting
+
+[33mcommit 547a1db992807689d46c1197ac2e7f28aa193927[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 10 12:16:58 2025 +0800
+
+    - fixed view height on mobile devices caused by search bar.
+
+[33mcommit 50cef93b914ccdf0e2fd5b7faa97728a753c4684[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 10 11:16:52 2025 +0800
+
+    - added banner in dashboard\n- improved margins and padding\n- adjusted responsiveness
+
+[33mcommit c463f465be1ec29485b1f3347c80cc9cad9379db[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 23:28:25 2025 +0800
+
+    cleaned up npm conflicts
+
+[33mcommit 81b6890357525beb1b2036b97e10831f460a141a[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 23:25:13 2025 +0800
+
+    Trigger GitHub Actions
+
+[33mcommit bf5fe81a59f0683eeb7afbf22c6caa5fc23df23e[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 23:19:53 2025 +0800
+
+    npm bug fix
+
+[33mcommit 167139bb2a13ccccbeb0416c28381dbddaf1224c[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 23:13:27 2025 +0800
+
+    added npm publish automation -bugfix
+
+[33mcommit ecadb6ca65c0aef28fb162bf7a92d46fc2fcd181[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 23:06:47 2025 +0800
+
+    added npm publish automation -bugfix
+
+[33mcommit 901dcf0157802039c23f60efdd6b582a3271b528[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 23:01:23 2025 +0800
+
+    added npm publish automation
+
+[33mcommit 00df19538931a62afd2d4f3de12781f352a3a4ed[m
+Merge: cc3100b 76a22d1
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 22:47:13 2025 +0800
+
+    Merge branch 'main' of https://github.com/NefydHP/micronas
+
+[33mcommit cc3100be6a3382f5ff5eb73bceacd8e30ff5e16e[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Sat Mar 8 22:45:51 2025 +0800
+
+    added proper content to dashboard panels
+
+[33mcommit 76a22d121f61f8a69c1c3698650a2007a44fcc2b[m
+Author: NefydHP <110378132+NefydHP@users.noreply.github.com>
+Date:   Thu Mar 6 23:03:41 2025 +0800
+
+    Add files via upload
+
+[33mcommit e40d2e5d431e81111d7e9d0306686be041094a73[m
+Author: NefydHP <110378132+NefydHP@users.noreply.github.com>
+Date:   Thu Mar 6 23:02:17 2025 +0800
+
+    Add files via upload
+
+[33mcommit 3e47c77a1d0009a9eda4c61f298171751dd3d7cf[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Thu Mar 6 21:20:36 2025 +0800
+
+    small adjustment on server.js with custom ip address assignment on app.listen (on launch)
+
+[33mcommit 6c38f4559557ac4b7792f033d5f11124b25b3a6e[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Thu Mar 6 21:02:19 2025 +0800
+
+    bug fix: forgot to close div tag on dashboard, causes disks and settings page not to close.
+
+[33mcommit 6372c827328304b720d4e3e477e92dcfb2128e6a[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Thu Mar 6 19:39:38 2025 +0800
+
+    improved responsiveness && tweaked sidebar
+
+[33mcommit c09db88d0a8c9456c90f541627cc34ade4f25e04[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Wed Mar 5 17:43:43 2025 +0800
+
+    added mobile dropdown menu
+
+[33mcommit 40513eb14c023ba66c56b33f75c1febbef1d99fe[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Wed Mar 5 15:38:49 2025 +0800
+
+    revamped mainpage
+
+[33mcommit 2cde61d5edf8f4a4e444161d690ab81acc43f5d7[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Wed Mar 5 15:18:40 2025 +0800
+
+    sidebar progress
+    sidebar progress
+
+[33mcommit 5a15fb77dbba3fe93adcd4a71f6f45cde0176f88[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Wed Mar 5 06:41:37 2025 +0800
+
+    pre-sidebar
+
+[33mcommit 0842f9ebe04d76534649321abd24b78851a0e832[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 3 20:09:18 2025 +0800
+
+    rar
+
+[33mcommit f4df565996d75d8f79881ccfd1a97d4b4146f1f2[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 3 20:06:24 2025 +0800
+
+    progress
+
+[33mcommit 67e1e30e52b5496a3c3da63041872356d3d754b1[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 3 16:44:17 2025 +0800
+
+    added primary files
+
+[33mcommit ed8144e05dae76465d2dd90993c1ce671d8c3e24[m
+Author: NefydHP <nefydhp@gmail.com>
+Date:   Mon Mar 3 16:35:21 2025 +0800
+
+    first commit
