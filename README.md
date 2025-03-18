@@ -2,7 +2,7 @@
 
 This is a web page for users to view, access, and configure their very own MICRO NAS through a user-friendly interface.
 
-![Logo](public/images/banner-orange.png)
+![Logo](public/images/banner-orange-darkmode.png)
 
 ## Acknowledgements
 
@@ -18,6 +18,21 @@ This is a web page for users to view, access, and configure their very own MICRO
 # DISCLAIMER
 
 This project is still under beta. Data found in the website may be incomplete or are substitutes.
+
+## Quick Try
+
+**Run Without Installation (Recommended for One-Time Use)**
+
+You can run the website directly using npx (you need to install NodeJS for npx):
+
+```bash
+npx micronas-monitor
+```
+
+In case of any errors, try running your terminal in administrator mode, or if on
+Android Termux, you'll unfortunately need some slightly advanced configuration.
+
+Alternatively on any device, you can install the project and modify the port variable found in server.js to 3000,then run with ```npm run deploy``` or ```node server.js```.
 
 ## Deployment
 
@@ -98,11 +113,12 @@ npm uninstall micronas-monitor
 
 ## Features
 
-- Dashboard for introduction, resources, links, and socials.
+- Login Page where you can enter your MICRO NAS through IP address, the account you wish to use, and the account password.
+- Dashboard for resources and socials.
 - Disks Page for viewing and modifying files inside your MICRO NAS.
-- Settings Page for configuring website theme (light/dark), among other things.
-- Login Page for initializing the MICRO NAS' IP address, the username you wish to use, and the user password.
+- Dark mode for less eye strain and an aesthetic change.
+- It's also responsive—adapting to most common device sizes and dimensions. Mobile, Desktop, Notebooks, and more!
 
 ## Feedback
 
-If you have any feedback, please reach out to us at group2.iii.gnhs@gmail.com
+If you have any feedback, please reach out to us through email at group2.iii.gnhs@gmail.com
